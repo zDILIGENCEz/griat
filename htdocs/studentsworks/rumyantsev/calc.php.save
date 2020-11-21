@@ -1,0 +1,161 @@
+
+<html>
+<head>
+<title>Электронные материалы</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link href="style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<script>
+function randomInteger(button, min, max) {
+  var rand = min + Math.random() * (max - min)
+  rand = Math.round(rand);
+  if(button == 1)
+	document.calculator.number1.value = rand;
+ // else if(button == 2)
+//	document.calculator.number2.value = rand;
+  //return rand;
+}
+
+//alert( randomInteger(1, 3) );
+
+</script>
+
+<div id="page">
+
+	<div id="header">
+		<h1>Электронные УМК по предметам </h1>
+	</div>
+	<div id="content">Калькулятор на PHP
+    
+    <?php	
+
+	function clearData($data, $type='i'){
+
+	    switch($type){
+	        case 'i': return $data*1; break;
+
+	        case 's': return trim(strip_tags($data)); break;
+
+	    }
+	}
+	
+
+	$output = '';
+
+	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+	    $number1 = clearData($_POST['number1']);
+
+	    $number2 = clearData($_POST['number2']);
+	    $operator = clearData($_POST['operator'], 's');
+
+	    $output = "$number1 $operator $number2 = ";
+
+	    switch($operator){
+
+	        case '+': $output .= $number1 + $number2; break;
+
+	        case '-': $output .= $number1 - $number2; break;
+
+	        case '*': $output .= $number1 * $number2; break;
+	        case '/':
+
+	            if($number2 == 0)
+
+	                $output = 'Неизвестная операция!';
+
+	            else
+
+	                $output .= $number1 / $number2;
+
+	            break;
+
+	        default: $output = "Неизвестное '$operator'";
+
+	    }
+
+	    $verify=true;
+
+	    if ($verify == 'true')
+ 
+		{
+			echo "<p>Выражение посчитано";
+		}
+
+	}
+
+	?>	
+
+	
+
+	<form name="calculator" action="<?=$_SERVER['PHP_SELF']?>" method="POST">
+
+	число 1:<br />	<input type="text" name="number1" value=""> 
+    <input type="button1" value="Сгенерировать" onClick="randomInteger(1, 1, 300);">
+    <br />
+
+	операция: <br />
+
+	<input type="text" name="operator"><br />
+
+	число 2:<br />	<input type="text" name="number2"  value="">
+	<input type="button2" value="Сгенерировать" onClick="randomInteger(2, 1, 300);">
+	<br />
+
+	<input type="submit" value="Посчитать!">
+
+	</form>
+
+	<?php
+
+	if($output){
+
+	    echo $output;
+
+	}
+
+	?>
+    
+    
+    </div>
+
+	<div id="menu">
+
+		<h3>
+			<p><a href="php/calc.php">Калькулятор</a></p>
+			<p>Математика</p>
+			<p>Русский язык</p>
+			<p>Биология</p>
+			<p>Химия</p>
+			<p>Физика</p>
+		</h3>
+
+	</div>
+	<div id="header2">
+	<h2 align=center> Партнеры проекта </h2>
+	</div>
+	
+	<div id="block1">
+		<img src="http://minyazev.ru/1.jpg" alt="КНИТУ-КАИ">		
+		
+	</div>
+		<div id="block2">
+		<img src="2.jpg" alt="google">		
+		
+	</div>
+		<div id="block3">
+		<img src="3.jpg" alt="apple">		
+		
+	</div>
+
+</div>
+
+</body>
+
+</html>
+
